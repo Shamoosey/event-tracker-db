@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                  String @id @default(uuid())
+  username            String
+  email               String
+  clerkId             String
+  
+  attendeeEvents      EventAttendee[]
+  userEvents          Event[]
+}
+
+model Event {
+  id                  String @id @default(uuid())
+  name                String
+  description         String
+  date                DateTime
+  location            String
+  updatedAt           DateTime @updatedAt
+  createdAt           DateTime @default(now())
+
+  attendees           EventAttendee[]
+
+  userId              String
+  user                User @relation(fields: [userId], references: [id])
+}
+
+
+model EventAttendee {
+  id                  String @id @default(uuid())
+  status              EventStatus
+  message             String? // optional message to inclue with status
+  
+  eventId             String
+  event               Event @relation(fields: [eventId], references: [id])
+
+  userId              String
+  user                User @relation(fields: [userId], references: [id])
+}
+
+enum EventStatus {
+  Going
+  NotGoing
+  Maybe
+}
