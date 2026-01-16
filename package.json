@@ -16,6 +16,7 @@
     "prisma:seed": "prisma db seed"
   },
   "dependencies": {
+    "@clerk/express": "^1.7.62",
     "@prisma/adapter-pg": "^7.2.0",
     "@prisma/client": "^7.2.0",
     "class-validator": "^0.14.3",
