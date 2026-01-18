@@ -1,5 +1,6 @@
 import prisma from "@prisma/client";
 import { Event, EventStatus } from "@prisma/generated/prisma";
+import { CreateEventDto } from "../types/CreateEventDto";
 
 export const fetchAllEvents = async (): Promise<Event[]> => {
   const data = await prisma.event.findMany({
@@ -23,6 +24,26 @@ export const fetchAllEvents = async (): Promise<Event[]> => {
     },
   });
   return data;
+};
+
+export const createEvent = async (data: CreateEventDto, clerkUserId: string) => {
+  const user = await prisma.user.findFirstOrThrow({
+    where: {
+      clerkId: clerkUserId,
+    },
+  });
+
+  const event = await prisma.event.create({
+    data: {
+      ...data,
+      userId: user.id,
+    },
+    include: {
+      user: true,
+    },
+  });
+
+  return event;
 };
 
 export const updateEventAttendance = async (eventId: string, userClerkId: string, status: EventStatus) => {
