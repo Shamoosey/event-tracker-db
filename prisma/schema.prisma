@@ -29,20 +29,19 @@ model Event {
   attendees           EventAttendee[]
 
   userId              String
-  user                User @relation(fields: [userId], references: [id])
+  user                User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
-
 
 model EventAttendee {
   id                  String @id @default(uuid())
   status              EventStatus
-  message             String? // optional message to inclue with status
+  message             String? // optional message to include with status
   
   eventId             String
-  event               Event @relation(fields: [eventId], references: [id])
+  event               Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
 
   userId              String
-  user                User @relation(fields: [userId], references: [id])
+  user                User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum EventStatus {
