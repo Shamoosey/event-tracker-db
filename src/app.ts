@@ -46,6 +46,9 @@ useExpressServer(app, {
   routePrefix: "/api/v1",
   controllers: [__dirname + "/api/v1/controllers/*.ts"],
   cors: corsOptions,
+  validation: true,
+  classTransformer: true,
+  defaultErrorHandler: true,
 });
 
 dotenv.config();

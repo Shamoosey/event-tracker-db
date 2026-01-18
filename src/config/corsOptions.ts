@@ -2,7 +2,7 @@ import { CorsOptions } from "cors";
 
 const corsOptions: CorsOptions = {
   origin: function (origin, callback) {
-    const allowedOrigins = [process.env.FRONTEND_URL];
+    const allowedOrigins = [process.env.FRONTEND_URL, `http://localhost:${process.env.PORT}`];
 
     if (allowedOrigins.includes(origin) || !origin) {
       callback(null, true);
